@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des membres</title>
+</head>
+<body>
+    <h1>Liste des membres</h1>
+    <ul>
+        {% for emprunteur in emprunteurs %}
+        <li>
+            Nom : {{ emprunteur.name }} | Bloqué.e : {{emprunteur.bloque }} | <a href="/modification-de-membre/{{ emprunteur.name }}/"><button type="submit">Mettre à jour</button></a>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

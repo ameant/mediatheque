@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des médias</title>
+</head>
+<body>
+    <h1>Liste des médias</h1>
+
+    <div>
+        <div>
+            <a href="{% url 'ajout_livre' %}">
+                <button>Ajouter un livre</button>
+            </a>
+        </div>
+        <div>
+            <a href="{% url 'ajout_dvd' %}">
+                <button>Ajouter un DVD</button>
+            </a>
+        </div>
+        <div>
+            <a href="{% url 'ajout_cd' %}">
+                <button>Ajouter un CD</button>
+            </a>
+        </div>
+        <div>
+            <a href="{% url 'ajout_jp' %}">
+                <button>Ajouter un jeu de plateau</button>
+            </a>
+        </div>
+        <div>
+            <a href="{% url 'ajout_emprunt' %}">
+                <button>Ajouter un emprunt</button>
+            </a>
+        </div>
+    </div>
+
+    <h2>Livres</h2>
+    <ul>
+        {% for livre in livres %}
+        <li>{{ livre.name }} - {{ livre.author }} - Disponible : {{ livre.disponible }} </li>
+        {% endfor %}
+    </ul>
+
+    <h2>DVD</h2>
+    <ul>
+        {% for dvd in dvds %}
+        <li>{{ dvd.name }} - {{ dvd.director }} - Disponible : {{ dvd.disponible }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>CD</h2>
+    <ul>
+        {% for cd in cds %}
+        <li>{{ cd.name }} - {{ cd.artist }} - Disponible : {{ cd.disponible }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Jeux de plateau</h2>
+        <ul>
+            {% for jp in jps %}
+            <li>{{ jp.name }} - {{ jp.creator }}</li>
+            {% endfor %}
+        </ul>
+</body>
+</html>
