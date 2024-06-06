@@ -1,5 +1,6 @@
 from django.db import models
 from membre.models import Emprunteur
+from django.utils import timezone
 
 class Media(models.Model):
     name = models.CharField(max_length=50)
@@ -7,23 +8,17 @@ class Media(models.Model):
     available = models.BooleanField(default=True)
     borrower = models.ForeignKey(Emprunteur, on_delete=models.SET_NULL, null=True, blank=True)
 
-    class Meta:
-        abstract = True
-
     def disponible(self):
         return "Oui" if self.available else "Non"
 
-    def emprunter(self, borrower):
-        self.borrower = borrower
-        self.available = False
-        self.borrowing_date = timezone.now()
-        self.save()
+    def is_late(self):
+        if self.borrowing_date:
+            return (timezone.now().date() - self.borrowing_date).days > 7
+        return False
 
-    def retourner(self):
-        self.borrower = None
-        self.available = True
-        self.borrowing_date = None
-        self.save()
+    class Meta:
+        abstract = True
+
 class Livre(Media):
     author = models.CharField(max_length=50)
 

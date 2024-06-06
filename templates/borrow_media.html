@@ -2,15 +2,15 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Modifier un membre</title>
+    <title>Emprunter un média</title>
 </head>
 <body>
-    <h1>Modifier un membre</h1>
+    <h1>Emprunter un média</h1>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Enregistrer</button>
     </form>
-    <a href="{% url 'liste_membres' %}">Retour à la liste des membres</a>
+    <a href="{% url 'liste_medias' %}">Retour à la liste des médias</a>
 </body>
 </html>

@@ -7,60 +7,94 @@
 <body>
     <h1>Liste des médias</h1>
 
-    <div>
-        <div>
-            <a href="{% url 'ajout_livre' %}">
-                <button>Ajouter un livre</button>
-            </a>
-        </div>
-        <div>
-            <a href="{% url 'ajout_dvd' %}">
-                <button>Ajouter un DVD</button>
-            </a>
-        </div>
-        <div>
-            <a href="{% url 'ajout_cd' %}">
-                <button>Ajouter un CD</button>
-            </a>
-        </div>
-        <div>
-            <a href="{% url 'ajout_jp' %}">
-                <button>Ajouter un jeu de plateau</button>
-            </a>
-        </div>
-        <div>
-            <a href="{% url 'ajout_emprunt' %}">
-                <button>Ajouter un emprunt</button>
-            </a>
-        </div>
-    </div>
-
     <h2>Livres</h2>
+    <div>
+        <a href="{% url 'ajout_livre' %}">
+            <button>Ajouter un livre</button>
+        </a>
+    </div>
     <ul>
         {% for livre in livres %}
-        <li>{{ livre.name }} - {{ livre.author }} - Disponible : {{ livre.disponible }} </li>
+        <li>
+            {{ livre.name }} - {{ livre.author }} -
+            {% if livre.available %}
+                Disponible
+                <a href="{% url 'emprunt_livre' livre.name %}">
+                    <button>Emprunter</button>
+                </a>
+            {% else %}
+                Non disponible - Emprunté par {{ livre.borrower.name }} le {{ livre.borrowing_date|date:"d/m/Y" }}
+                {% if livre.is_late %}
+                    <p style="color: red;">En retard</p>
+                    <p><a href="{% url 'liste_membres' %}">Bloquer l'emprunteur</a></p>
+                {% endif %}
+            {% endif %}
+        </li>
         {% endfor %}
     </ul>
 
     <h2>DVD</h2>
+    <div>
+        <a href="{% url 'ajout_dvd' %}">
+            <button>Ajouter un DVD</button>
+        </a>
+    </div>
     <ul>
         {% for dvd in dvds %}
-        <li>{{ dvd.name }} - {{ dvd.director }} - Disponible : {{ dvd.disponible }}</li>
+        <li>
+            {{ dvd.name }} - {{ dvd.director }} -
+            {% if dvd.available %}
+                Disponible
+                <a href="{% url 'emprunt_dvd' dvd.name %}">
+                    <button>Emprunter</button>
+                </a>
+            {% else %}
+                Non disponible - Emprunté par {{ dvd.borrower.name }} le {{ dvd.borrowing_date|date:"d/m/Y" }}
+                {% if dvd.is_late %}
+                    <p style="color: red;">En retard</p>
+                    <p><a href="{% url 'liste_membres' %}">Bloquer l'emprunteur</a></p>
+                {% endif %}
+            {% endif %}
+        </li>
         {% endfor %}
     </ul>
 
     <h2>CD</h2>
+    <div>
+        <a href="{% url 'ajout_cd' %}">
+            <button>Ajouter un CD</button>
+        </a>
+    </div>
     <ul>
         {% for cd in cds %}
-        <li>{{ cd.name }} - {{ cd.artist }} - Disponible : {{ cd.disponible }}</li>
+        <li>
+            {{ cd.name }} - {{ cd.artist }} -
+            {% if cd.available %}
+                Disponible
+                <a href="{% url 'emprunt_cd' cd.name %}">
+                    <button>Emprunter</button>
+                </a>
+            {% else %}
+                Non disponible - Emprunté par {{ cd.borrower.name }} le {{ cd.borrowing_date|date:"d/m/Y" }}
+                {% if cd.is_late %}
+                    <p style="color: red;">En retard</p>
+                    <p><a href="{% url 'liste_membres' %}">Bloquer l'emprunteur</a></p>
+                {% endif %}
+            {% endif %}
+        </li>
         {% endfor %}
     </ul>
 
     <h2>Jeux de plateau</h2>
-        <ul>
-            {% for jp in jps %}
-            <li>{{ jp.name }} - {{ jp.creator }}</li>
-            {% endfor %}
-        </ul>
+     <div>
+        <a href="{% url 'ajout_jp' %}">
+            <button>Ajouter un jeu de plateau</button>
+        </a>
+    </div>
+    <ul>
+        {% for jp in jps %}
+        <li>{{ jp.name }} - {{ jp.creator }}</li>
+        {% endfor %}
+    </ul>
 </body>
 </html>

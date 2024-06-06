@@ -1,7 +1,9 @@
-from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Media, Livre, Dvd, Cd, JeuDePlateau, Emprunteur
+from .models import Livre, Dvd, Cd, JeuDePlateau, Emprunteur
+from django import forms
+from django.core.exceptions import ValidationError
+
 class CustomUserCreationForm(UserCreationForm):
     username = forms.CharField(
         label= ("Nom d'utilisateur"),
@@ -30,6 +32,7 @@ class CustomUserCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = User
         fields = UserCreationForm.Meta.fields + ("username", "name", "password1", "password2")
+
 class BookForm(forms.ModelForm):
     class Meta:
         model = Livre
@@ -49,6 +52,7 @@ class DvdForm(forms.ModelForm):
             'director': 'Réalisateur / Réalisatrice',
             'available': 'Disponible'
         }
+
 class CdForm(forms.ModelForm):
     class Meta:
         model = Cd
@@ -67,20 +71,83 @@ class BoardGameForm(forms.ModelForm):
             'name': 'Nom',
             'creator': 'Créateur / Créatrice',
         }
-class BorrowingForm(forms.Form):
-    media_type = forms.ChoiceField(choices=[('Livre', 'Livre'), ('Dvd', 'Dvd'), ('Cd', 'Cd'), ('JeuDePlateau', 'Jeu de Plateau')])
-    media = forms.ModelChoiceField(queryset=Livre.objects.filter(available=True), required=False)
-    borrower = forms.ModelChoiceField(queryset=Emprunteur.objects.all())
+
+class BookBorrowForm(forms.ModelForm):
+    borrower = forms.CharField(label="Emprunteur / Emprunteuse")
+    borrowing_date = forms.DateField(
+        label="Date d\'emprunt",
+        help_text="Format: JJ/MM/AAAA"
+    )
+
+    class Meta:
+        model = Livre
+        fields = ['name', 'author', 'borrowing_date']
+        labels = {
+            'name': 'Nom',
+            'author': 'Auteur / Autrice',
+            'borrowing_date': 'Date d\'emprunt'
+        }
 
     def clean(self):
         cleaned_data = super().clean()
-        media_type = cleaned_data.get('media_type')
-        if media_type == 'Livre':
-            self.fields['media'].queryset = Livre.objects.filter(available=True)
-        elif media_type == 'Dvd':
-            self.fields['media'].queryset = Dvd.objects.filter(available=True)
-        elif media_type == 'Cd':
-            self.fields['media'].queryset = Cd.objects.filter(available=True)
-        elif media_type == 'JeuDePlateau':
-            self.fields['media'].queryset = JeuDePlateau.objects.filter(available=True)
+        borrower_name = cleaned_data.get('borrower')
+
+        try:
+            emprunteur = Emprunteur.objects.get(name=borrower_name)
+        except Emprunteur.DoesNotExist:
+            raise ValidationError(f"Emprunteur {borrower_name} n'existe pas.")
+
+        total_borrows = (
+                emprunteur.livre_set.filter(available=False).count() +
+                emprunteur.dvd_set.filter(available=False).count() +
+                emprunteur.cd_set.filter(available=False).count()
+        )
+
+        if total_borrows >= 3:
+            raise ValidationError(f"{borrower_name} ne peut pas avoir plus de 3 emprunts à la fois")
+
+        self.instance.borrower = emprunteur
+
         return cleaned_data
+
+class DvdBorrowForm(BookBorrowForm):
+    borrower = forms.CharField(label="Emprunteur / Emprunteuse")
+    borrowing_date = forms.DateField(
+        label="Date d\'emprunt",
+        help_text="Format: JJ/MM/AAAA"
+    )
+
+    class Meta:
+        model = Dvd
+        fields = ['name', 'director', 'borrowing_date']
+        labels = {
+            'name': 'Nom',
+            'name': 'Nom',
+            'director': 'Réalisateur / Réalisatrice',
+            'borrowing_date': 'Date d\'emprunt'
+        }
+
+class CdBorrowForm(BookBorrowForm):
+    borrower = forms.CharField(label="Emprunteur / Emprunteuse")
+    borrowing_date = forms.DateField(
+        label="Date d\'emprunt",
+        help_text="Format: JJ/MM/AAAA"
+    )
+
+    class Meta:
+        model = Cd
+        fields = ['name', 'artist', 'borrowing_date']
+        labels = {
+            'name': 'Nom',
+            'artist': 'Artiste',
+            'borrowing_date': 'Date d\'emprunt'
+        }
+
+class BorrowerUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Emprunteur
+        fields = ['name', 'blocked']
+        labels = {
+            'name': 'Nom',
+            'blocked': 'Bloquer le membre'
+        }
