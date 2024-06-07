@@ -28,30 +28,6 @@ def b_connexion(request):
     return render (request, 'b_connection.html')
 
 def m_creation(request):
-    """
-        View function for user creation.
-
-        Parameters:
-        - request: HttpRequest object
-
-        Returns:
-        - If request method is POST and form is valid, redirects to 'b_menu'.
-        - If request method is GET, renders 'm_subscription.html' template with form.
-
-        Example:
-        >>> from django.test import RequestFactory
-        >>> from .forms import CustomUserCreationForm
-        >>> from .models import Emprunteur
-        >>> factory = RequestFactory()
-        >>> request = factory.post('/', {'username': 'testuser', 'password1': 'testpassword', 'password2': 'testpassword'})
-        >>> response = m_creation(request)
-        >>> response.status_code
-        302
-        >>> response.url
-        '/b_menu/'
-        >>> Emprunteur.objects.get(name='testuser')
-        <Emprunteur: Emprunteur object (1)>
-        """
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():

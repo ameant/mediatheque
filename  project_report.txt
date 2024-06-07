@@ -1,0 +1,130 @@
+1) Etude et correctifs du code fourni
+
+    J'ai traduit les toutes variables en anglais.
+    J'ai utilisé le style snake_case et ai donc écrit en les variables en miniscules.
+    Par exemple, "dateEmprunt" est devenu "borrowing_date".
+
+    Le style recommandé pour nommer les classes en Python est appelé CamelCase.
+    Le nom d'une classe commence toujours par une majuscule.
+    Par exemples, "class livre():" est devenu "class Livre():" et "class jeuDePlateau" est devenu "class JeuDePlateau".
+
+    J'ai créé une classe mère "Media" pour les classes "Livre", "Dvd" et "Cd" afin d'éviter les répétitions de variables :
+    name = ""
+    borrowing_date = ""
+    available = ""
+    borrower = ""
+
+    Les fonctions en Python sont écrites en snake_case.
+    "def menuBibliotheque():" et "def menuMembre():" sont donc devenus : "def menu_bibliotheque():" et "def menu_membre():"
+
+    J'ai corrigé les problèmes d'indentations comme ci-après :
+    class dvd():
+        name = ""
+            realisateur = ""
+            dateEmprunt = ""
+            disponible = ""
+        emprunteur = ""
+
+    class Emprunteur():
+        name = ""
+            bloque = ""
+
+
+    J'ai remplacé "print" par "return render" car c'est la méthode correcte
+    pour renvoyer une réponse HTTP contenant un template rendu avec Django.
+    Cela respecte le modèle de traitement des requêtes et réponses du framework
+    et permet d'afficher correctement des pages web aux utilisateurs.
+
+
+
+2) La mise en place des fonctionnalités demandées
+    a) Application Bibliothécaire
+
+    Créer un membre-emprunteur
+
+Utilisation d'un formulaire de création de compte personnalisé (CustomUserCreationForm)
+qui enregistre à la fois un utilisateur Django et un objet Emprunteur associé.
+La bibliothécaire remplit le formulaire avec les informations, un compte utilisateur est créé et lié à un objet Emprunteur.
+
+    Afficher la liste des membres
+
+Récupération de tous les objets Emprunteur à partir de la base de données et affichage dans un template.
+La bibliothécaire accède à une page qui affiche une liste des membres-emprunteurs avec leurs informations associées (bloqué.e ou non).
+
+    Mettre à jour un membre
+
+Utilisation d'un formulaire de mise à jour (BorrowerUpdateForm) qui modifie les données de l'objet Emprunteur associé à l'utilisateur (nom et bloqué.e ou non).
+La bibliothécaire accède à une page où elle peut modifier les informations d'un membre
+et soumettre le formulaire pour enregistrer les modifications.
+
+    Supprimer un membre
+
+Utilisation de la méthode delete() sur l'objet Emprunteur associé à l'utilisateur.
+La bibliothécaire accède à une page où elle peut choisir de supprimer le compte d'un membre.
+
+    Afficher la liste des médias
+
+Récupération de tous les objets de médias à partir de la base de données et affichage dans un template.
+La bibliothécaire accède à une page qui affiche une liste de médias avec les informations associées,
+indiquant s'ils sont disponibles ou empruntés.
+
+    Créer un emprunt pour un média disponible
+
+Utilisation de différents formulaires de création d'emprunt (BookBorrowForm, DvdBorrowForm, CdBorrowForm)
+pour enregistrer les emprunts dans la base de données.
+La bibliothécaire sélectionne un média disponible, remplit le formulaire d'emprunt et soumet la demande,
+ce qui met à jour l'état du média et enregistre l'emprunt dans la base de données.
+
+    Ajouter un média
+
+Utilisation de formulaires spécifiques à chaque type de média (BookForm, DvdForm, CdForm, BoardGameForm)
+pour enregistrer les informations du média dans la base de données.
+La bibliothécaire accède à une page de création de média, remplit le formulaire avec les détails du média et soumet la demande,
+ce qui crée un nouvel objet de média dans la base de données.
+
+
+    b) Application Membre
+
+     Consultation de la liste des médias
+
+Récupération de tous les objets de médias à partir de la base de données et affichage dans un template.
+Le membre accède à une page qui affiche une liste de médias avec leurs informations associées,
+indiquant s'ils sont disponibles ou non.
+
+
+
+3)  Une base de données avec des données test
+
+Connexion à la base de données :
+ 'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'mediatheque',
+        'USER': 'mediatheque',
+        'PASSWORD': 'mediaTHEQUE',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
+
+Connexion à http://127.0.0.1:8000/admin/ avec superuser :
+    Nom d’utilisateur : amely
+    Mot de passe : aamm
+
+Connexion bibliothécaire :
+    Nom d’utilisateur : : mmejane
+    Mot de passe : jane
+
+Connexion membres :
+    Nom d’utilisateur : : prenom_user
+    Mot de passe : prenom_user
+    Exemple pour isa = isa et isa
+
+
+4) Instructions pour exécuter le programme depuis n’importe quelle machine (sans prérequis)
+
+Installer Python sur la machine : https://www.python.org/downloads/
+Installer pip si ce n'est pas déjà le cas :python -m ensurepip --upgrade
+Installer Django : pip install django
+Exécuter le serveur de développement Django en utilisant la commande : python manage.py runserver
+
+
+
+
+
