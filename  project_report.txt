@@ -127,6 +127,9 @@ SET time_zone = "+00:00";
 -- Base de données : `mediatheque`
 --
 
+CREATE DATABASE IF NOT EXISTS mediatheque;
+USE mediatheque;
+
 -- --------------------------------------------------------
 
 --
