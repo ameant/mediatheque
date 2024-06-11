@@ -95,6 +95,510 @@ indiquant s'ils sont disponibles ou non.
 
 3)  Une base de données avec des données test
 
+Créer l'utilisateur :
+CREATE USER 'mediatheque'@'localhost' IDENTIFIED BY 'mediaTHEQUE';
+
+-- # Privilèges pour `mediatheque`@`%`
+
+GRANT ALL PRIVILEGES ON *.* TO 'mediatheque'@'localhost'; ALTER USER 'mediatheque'@'localhost' REQUIRE NONE WITH MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0;
+
+
+Base de données :
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Hôte : 127.0.0.1:3306
+-- Généré le : mar. 11 juin 2024 à 09:44
+-- Version du serveur : 8.2.0
+-- Version de PHP : 8.2.13
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Base de données : `mediatheque`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `auth_group`
+--
+
+DROP TABLE IF EXISTS `auth_group`;
+CREATE TABLE IF NOT EXISTS `auth_group` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(150) COLLATE utf8mb4_general_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `auth_group_permissions`
+--
+
+DROP TABLE IF EXISTS `auth_group_permissions`;
+CREATE TABLE IF NOT EXISTS `auth_group_permissions` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `group_id` int NOT NULL,
+  `permission_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `auth_group_permissions_group_id_permission_id_0cd325b0_uniq` (`group_id`,`permission_id`),
+  KEY `auth_group_permissions_group_id_b120cbf9` (`group_id`),
+  KEY `auth_group_permissions_permission_id_84c5c92e` (`permission_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `auth_permission`
+--
+
+DROP TABLE IF EXISTS `auth_permission`;
+CREATE TABLE IF NOT EXISTS `auth_permission` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `content_type_id` int NOT NULL,
+  `codename` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `auth_permission_content_type_id_codename_01ab375a_uniq` (`content_type_id`,`codename`),
+  KEY `auth_permission_content_type_id_2f476e4b` (`content_type_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `auth_permission`
+--
+
+INSERT INTO `auth_permission` (`id`, `name`, `content_type_id`, `codename`) VALUES
+(1, 'Can add log entry', 1, 'add_logentry'),
+(2, 'Can change log entry', 1, 'change_logentry'),
+(3, 'Can delete log entry', 1, 'delete_logentry'),
+(4, 'Can view log entry', 1, 'view_logentry'),
+(5, 'Can add permission', 2, 'add_permission'),
+(6, 'Can change permission', 2, 'change_permission'),
+(7, 'Can delete permission', 2, 'delete_permission'),
+(8, 'Can view permission', 2, 'view_permission'),
+(9, 'Can add group', 3, 'add_group'),
+(10, 'Can change group', 3, 'change_group'),
+(11, 'Can delete group', 3, 'delete_group'),
+(12, 'Can view group', 3, 'view_group'),
+(13, 'Can add user', 4, 'add_user'),
+(14, 'Can change user', 4, 'change_user'),
+(15, 'Can delete user', 4, 'delete_user'),
+(16, 'Can view user', 4, 'view_user'),
+(17, 'Can add content type', 5, 'add_contenttype'),
+(18, 'Can change content type', 5, 'change_contenttype'),
+(19, 'Can delete content type', 5, 'delete_contenttype'),
+(20, 'Can view content type', 5, 'view_contenttype'),
+(21, 'Can add session', 6, 'add_session'),
+(22, 'Can change session', 6, 'change_session'),
+(23, 'Can delete session', 6, 'delete_session'),
+(24, 'Can view session', 6, 'view_session'),
+(25, 'Can add jeu de plateau', 7, 'add_jeudeplateau'),
+(26, 'Can change jeu de plateau', 7, 'change_jeudeplateau'),
+(27, 'Can delete jeu de plateau', 7, 'delete_jeudeplateau'),
+(28, 'Can view jeu de plateau', 7, 'view_jeudeplateau'),
+(29, 'Can add cd', 8, 'add_cd'),
+(30, 'Can change cd', 8, 'change_cd'),
+(31, 'Can delete cd', 8, 'delete_cd'),
+(32, 'Can view cd', 8, 'view_cd'),
+(33, 'Can add dvd', 9, 'add_dvd'),
+(34, 'Can change dvd', 9, 'change_dvd'),
+(35, 'Can delete dvd', 9, 'delete_dvd'),
+(36, 'Can view dvd', 9, 'view_dvd'),
+(37, 'Can add livre', 10, 'add_livre'),
+(38, 'Can change livre', 10, 'change_livre'),
+(39, 'Can delete livre', 10, 'delete_livre'),
+(40, 'Can view livre', 10, 'view_livre'),
+(41, 'Can add emprunteur', 11, 'add_emprunteur'),
+(42, 'Can change emprunteur', 11, 'change_emprunteur'),
+(43, 'Can delete emprunteur', 11, 'delete_emprunteur'),
+(44, 'Can view emprunteur', 11, 'view_emprunteur');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `auth_user`
+--
+
+DROP TABLE IF EXISTS `auth_user`;
+CREATE TABLE IF NOT EXISTS `auth_user` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `password` varchar(128) COLLATE utf8mb4_general_ci NOT NULL,
+  `last_login` datetime(6) DEFAULT NULL,
+  `is_superuser` tinyint(1) NOT NULL,
+  `username` varchar(150) COLLATE utf8mb4_general_ci NOT NULL,
+  `first_name` varchar(150) COLLATE utf8mb4_general_ci NOT NULL,
+  `last_name` varchar(150) COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(254) COLLATE utf8mb4_general_ci NOT NULL,
+  `is_staff` tinyint(1) NOT NULL,
+  `is_active` tinyint(1) NOT NULL,
+  `date_joined` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`)
+) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `auth_user`
+--
+
+INSERT INTO `auth_user` (`id`, `password`, `last_login`, `is_superuser`, `username`, `first_name`, `last_name`, `email`, `is_staff`, `is_active`, `date_joined`) VALUES
+(1, 'pbkdf2_sha256$720000$xZ4t1bP2tjmKGBoL4dcxDe$fH1t5ajojY6QrJXE1ibw6QhHsdQO43zsSWfSAT1+AYM=', '2024-06-07 10:40:31.062174', 0, 'mmejane', '', '', '', 0, 1, '2024-06-02 18:27:18.516111'),
+(18, 'pbkdf2_sha256$720000$tBhQR5VAxVhMeX4YqdXpZm$G2zIz6OCbVG+xX8DO4IvF4iDb0F6KKXVxR/NjFM6J1g=', '2024-06-07 10:50:15.367874', 0, 'isa', '', '', '', 0, 1, '2024-06-07 10:40:39.483474'),
+(19, 'pbkdf2_sha256$720000$RYgofyoBcd7J8HQWjVFHn4$Yn+wfqPOsNOlqzfEvFe5OVR3OfbvCOWbcz8jz2XA3Rc=', NULL, 0, 'simone', '', '', '', 0, 1, '2024-06-07 10:42:54.676979'),
+(20, 'pbkdf2_sha256$720000$D1Vzvo8QiYSDeWfOalktGp$Lb3c36OY5pTMnElqNimNuFvesJ71FeCAa2v7IMcUEF0=', NULL, 0, 'flo', '', '', '', 0, 1, '2024-06-07 10:43:44.046841'),
+(9, 'pbkdf2_sha256$720000$aJaJDGvqPIfdPL63oKy1Vn$uOdJh3sDYRh13g35eqRAIFxrNNlpqFAO3z2NTj+3BBM=', '2024-06-07 10:50:52.146115', 1, 'amely', '', '', '', 1, 1, '2024-06-06 11:03:35.866833');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `auth_user_groups`
+--
+
+DROP TABLE IF EXISTS `auth_user_groups`;
+CREATE TABLE IF NOT EXISTS `auth_user_groups` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `group_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `auth_user_groups_user_id_group_id_94350c0c_uniq` (`user_id`,`group_id`),
+  KEY `auth_user_groups_user_id_6a12ed8b` (`user_id`),
+  KEY `auth_user_groups_group_id_97559544` (`group_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `auth_user_user_permissions`
+--
+
+DROP TABLE IF EXISTS `auth_user_user_permissions`;
+CREATE TABLE IF NOT EXISTS `auth_user_user_permissions` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `permission_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `auth_user_user_permissions_user_id_permission_id_14a6b632_uniq` (`user_id`,`permission_id`),
+  KEY `auth_user_user_permissions_user_id_a95ead1b` (`user_id`),
+  KEY `auth_user_user_permissions_permission_id_1fbb5f2c` (`permission_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `bibliothecaire_cd`
+--
+
+DROP TABLE IF EXISTS `bibliothecaire_cd`;
+CREATE TABLE IF NOT EXISTS `bibliothecaire_cd` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `borrowing_date` date DEFAULT NULL,
+  `available` tinyint(1) NOT NULL,
+  `artist` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `borrower_id` bigint DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `bibliothecaire_cd_borrower_id_1486a70e` (`borrower_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `bibliothecaire_cd`
+--
+
+INSERT INTO `bibliothecaire_cd` (`id`, `name`, `borrowing_date`, `available`, `artist`, `borrower_id`) VALUES
+(14, 'Sadnecessary', NULL, 1, 'Milky Chance', NULL),
+(13, 'Blossom', NULL, 1, 'Milky Chance', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `bibliothecaire_dvd`
+--
+
+DROP TABLE IF EXISTS `bibliothecaire_dvd`;
+CREATE TABLE IF NOT EXISTS `bibliothecaire_dvd` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `borrowing_date` date DEFAULT NULL,
+  `available` tinyint(1) NOT NULL,
+  `director` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `borrower_id` bigint DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `bibliothecaire_dvd_borrower_id_fd8e675b` (`borrower_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `bibliothecaire_dvd`
+--
+
+INSERT INTO `bibliothecaire_dvd` (`id`, `name`, `borrowing_date`, `available`, `director`, `borrower_id`) VALUES
+(7, 'Pauvres créatures', NULL, 1, 'Yorgos Lanthimos', NULL),
+(8, 'Nomadland', NULL, 1, 'Chloé Zhao', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `bibliothecaire_jeudeplateau`
+--
+
+DROP TABLE IF EXISTS `bibliothecaire_jeudeplateau`;
+CREATE TABLE IF NOT EXISTS `bibliothecaire_jeudeplateau` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `creator` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `bibliothecaire_jeudeplateau`
+--
+
+INSERT INTO `bibliothecaire_jeudeplateau` (`id`, `name`, `creator`) VALUES
+(1, 'Scrabble', 'Alfred Mosher Butts'),
+(2, 'Monopoly', 'Elizabeth Magie');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `bibliothecaire_livre`
+--
+
+DROP TABLE IF EXISTS `bibliothecaire_livre`;
+CREATE TABLE IF NOT EXISTS `bibliothecaire_livre` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `borrowing_date` date DEFAULT NULL,
+  `available` tinyint(1) NOT NULL,
+  `author` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `borrower_id` bigint DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `bibliothecaire_livre_borrower_id_bcb104ce` (`borrower_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `bibliothecaire_livre`
+--
+
+INSERT INTO `bibliothecaire_livre` (`id`, `name`, `borrowing_date`, `available`, `author`, `borrower_id`) VALUES
+(20, 'Carrie', '2024-05-28', 0, 'Stephen King', 23),
+(19, 'Misery', NULL, 1, 'Stephen King', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `django_admin_log`
+--
+
+DROP TABLE IF EXISTS `django_admin_log`;
+CREATE TABLE IF NOT EXISTS `django_admin_log` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `action_time` datetime(6) NOT NULL,
+  `object_id` longtext COLLATE utf8mb4_general_ci,
+  `object_repr` varchar(200) COLLATE utf8mb4_general_ci NOT NULL,
+  `action_flag` smallint UNSIGNED NOT NULL,
+  `change_message` longtext COLLATE utf8mb4_general_ci NOT NULL,
+  `content_type_id` int DEFAULT NULL,
+  `user_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `django_admin_log_content_type_id_c4bce8eb` (`content_type_id`),
+  KEY `django_admin_log_user_id_c564eba6` (`user_id`)
+) ;
+
+--
+-- Déchargement des données de la table `django_admin_log`
+--
+
+INSERT INTO `django_admin_log` (`id`, `action_time`, `object_id`, `object_repr`, `action_flag`, `change_message`, `content_type_id`, `user_id`) VALUES
+(1, '2024-06-06 11:07:23.538957', '3', 'Cd object (3)', 3, '', 8, 9),
+(2, '2024-06-06 11:07:23.538957', '2', 'Cd object (2)', 3, '', 8, 9),
+(3, '2024-06-06 11:07:23.538957', '1', 'Cd object (1)', 3, '', 8, 9),
+(4, '2024-06-06 11:07:33.174802', '2', 'Dvd object (2)', 3, '', 9, 9),
+(5, '2024-06-06 11:07:33.174802', '1', 'Dvd object (1)', 3, '', 9, 9),
+(6, '2024-06-06 11:07:42.060738', '7', 'Livre object (7)', 3, '', 10, 9),
+(7, '2024-06-06 11:07:42.060738', '6', 'Livre object (6)', 3, '', 10, 9),
+(8, '2024-06-06 11:07:42.077474', '5', 'Livre object (5)', 3, '', 10, 9),
+(9, '2024-06-06 11:07:42.077474', '4', 'Livre object (4)', 3, '', 10, 9),
+(10, '2024-06-06 11:07:42.077474', '3', 'Livre object (3)', 3, '', 10, 9),
+(11, '2024-06-06 11:07:42.077474', '2', 'Livre object (2)', 3, '', 10, 9),
+(12, '2024-06-06 11:07:42.077474', '1', 'Livre object (1)', 3, '', 10, 9),
+(13, '2024-06-06 11:08:29.353902', '12', 'Emprunteur object (12)', 3, '', 11, 9),
+(14, '2024-06-06 11:08:29.356348', '11', 'Emprunteur object (11)', 3, '', 11, 9),
+(15, '2024-06-06 11:08:29.356348', '3', 'Emprunteur object (3)', 3, '', 11, 9),
+(16, '2024-06-06 11:08:29.356348', '2', 'Emprunteur object (2)', 3, '', 11, 9),
+(17, '2024-06-06 11:08:29.356348', '1', 'Emprunteur object (1)', 3, '', 11, 9),
+(18, '2024-06-06 11:09:26.887824', '5', 'cam', 3, '', 4, 9),
+(19, '2024-06-06 11:09:26.887824', '6', 'cam2', 3, '', 4, 9),
+(20, '2024-06-06 11:09:26.887824', '7', 'cam3', 3, '', 4, 9),
+(21, '2024-06-06 11:09:26.887824', '4', 'mmeamy', 3, '', 4, 9),
+(22, '2024-06-06 11:09:26.887824', '3', 'mmejoe', 3, '', 4, 9),
+(23, '2024-06-06 11:09:26.887824', '2', 'mmemary', 3, '', 4, 9),
+(24, '2024-06-06 11:09:26.887824', '8', 'pierre', 3, '', 4, 9),
+(25, '2024-06-06 14:25:26.817442', '4', 'Dvd object (4)', 3, '', 9, 9),
+(26, '2024-06-06 14:28:56.021983', '4', 'Cd object (4)', 3, '', 8, 9),
+(27, '2024-06-06 14:30:43.384474', '5', 'Cd object (5)', 3, '', 8, 9),
+(28, '2024-06-06 14:32:05.340135', '6', 'Cd object (6)', 3, '', 8, 9),
+(29, '2024-06-06 14:32:50.016645', '7', 'Cd object (7)', 3, '', 8, 9),
+(30, '2024-06-06 15:53:02.406083', '9', 'Cd object (9)', 3, '', 8, 9),
+(31, '2024-06-06 15:53:02.424677', '8', 'Cd object (8)', 3, '', 8, 9),
+(32, '2024-06-06 15:54:22.404346', '12', 'Cd object (12)', 3, '', 8, 9),
+(33, '2024-06-06 15:54:22.414853', '11', 'Cd object (11)', 3, '', 8, 9),
+(34, '2024-06-06 15:58:18.370877', '13', 'Livre object (13)', 3, '', 10, 9),
+(35, '2024-06-06 15:58:18.377045', '11', 'Livre object (11)', 3, '', 10, 9),
+(36, '2024-06-06 15:58:18.378164', '10', 'Livre object (10)', 3, '', 10, 9),
+(37, '2024-06-06 15:58:18.380457', '9', 'Livre object (9)', 3, '', 10, 9),
+(38, '2024-06-06 15:58:18.381457', '8', 'Livre object (8)', 3, '', 10, 9),
+(39, '2024-06-06 16:24:10.142885', '14', 'Livre object (14)', 3, '', 10, 9),
+(40, '2024-06-06 16:24:25.589425', '6', 'Dvd object (6)', 3, '', 9, 9),
+(41, '2024-06-06 16:24:40.665967', '10', 'Cd object (10)', 3, '', 8, 9),
+(42, '2024-06-06 16:51:06.867830', '5', 'Dvd object (5)', 3, '', 9, 9),
+(43, '2024-06-06 16:51:06.867830', '3', 'Dvd object (3)', 3, '', 9, 9),
+(44, '2024-06-06 16:51:31.524610', '12', 'Livre object (12)', 3, '', 10, 9),
+(45, '2024-06-06 17:11:19.135118', '11', 'amy', 3, '', 4, 9),
+(46, '2024-06-06 17:11:19.135118', '12', 'cam', 3, '', 4, 9),
+(47, '2024-06-06 17:11:19.135118', '10', 'isa', 3, '', 4, 9),
+(48, '2024-06-06 17:11:19.135118', '13', 'joe', 3, '', 4, 9),
+(49, '2024-06-06 17:11:19.135118', '14', 'pierre', 3, '', 4, 9),
+(50, '2024-06-06 17:15:52.372978', '17', 'Livre object (17)', 3, '', 10, 9),
+(51, '2024-06-07 10:44:16.158944', '18', 'Livre object (18)', 3, '', 10, 9),
+(52, '2024-06-07 10:44:16.158944', '16', 'Livre object (16)', 3, '', 10, 9),
+(53, '2024-06-07 10:44:16.158944', '15', 'Livre object (15)', 3, '', 10, 9);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `django_content_type`
+--
+
+DROP TABLE IF EXISTS `django_content_type`;
+CREATE TABLE IF NOT EXISTS `django_content_type` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `app_label` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `model` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `django_content_type_app_label_model_76bd3d3b_uniq` (`app_label`,`model`)
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `django_content_type`
+--
+
+INSERT INTO `django_content_type` (`id`, `app_label`, `model`) VALUES
+(1, 'admin', 'logentry'),
+(2, 'auth', 'permission'),
+(3, 'auth', 'group'),
+(4, 'auth', 'user'),
+(5, 'contenttypes', 'contenttype'),
+(6, 'sessions', 'session'),
+(7, 'bibliothecaire', 'jeudeplateau'),
+(8, 'bibliothecaire', 'cd'),
+(9, 'bibliothecaire', 'dvd'),
+(10, 'bibliothecaire', 'livre'),
+(11, 'membre', 'emprunteur');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `django_migrations`
+--
+
+DROP TABLE IF EXISTS `django_migrations`;
+CREATE TABLE IF NOT EXISTS `django_migrations` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `app` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `applied` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `django_migrations`
+--
+
+INSERT INTO `django_migrations` (`id`, `app`, `name`, `applied`) VALUES
+(1, 'contenttypes', '0001_initial', '2024-06-02 16:32:47.277971'),
+(2, 'auth', '0001_initial', '2024-06-02 16:32:48.192733'),
+(3, 'admin', '0001_initial', '2024-06-02 16:32:48.415758'),
+(4, 'admin', '0002_logentry_remove_auto_add', '2024-06-02 16:32:48.419336'),
+(5, 'admin', '0003_logentry_add_action_flag_choices', '2024-06-02 16:32:48.426530'),
+(6, 'contenttypes', '0002_remove_content_type_name', '2024-06-02 16:32:48.561360'),
+(7, 'auth', '0002_alter_permission_name_max_length', '2024-06-02 16:32:48.646007'),
+(8, 'auth', '0003_alter_user_email_max_length', '2024-06-02 16:32:48.735449'),
+(9, 'auth', '0004_alter_user_username_opts', '2024-06-02 16:32:48.743078'),
+(10, 'auth', '0005_alter_user_last_login_null', '2024-06-02 16:32:48.809015'),
+(11, 'auth', '0006_require_contenttypes_0002', '2024-06-02 16:32:48.812201'),
+(12, 'auth', '0007_alter_validators_add_error_messages', '2024-06-02 16:32:48.814193'),
+(13, 'auth', '0008_alter_user_username_max_length', '2024-06-02 16:32:48.882210'),
+(14, 'auth', '0009_alter_user_last_name_max_length', '2024-06-02 16:32:48.945054'),
+(15, 'auth', '0010_alter_group_name_max_length', '2024-06-02 16:32:49.019256'),
+(16, 'auth', '0011_update_proxy_permissions', '2024-06-02 16:32:49.030495'),
+(17, 'auth', '0012_alter_user_first_name_max_length', '2024-06-02 16:32:49.086515'),
+(18, 'membre', '0001_initial', '2024-06-02 16:32:49.097069'),
+(19, 'bibliothecaire', '0001_initial', '2024-06-02 16:32:49.403734'),
+(20, 'sessions', '0001_initial', '2024-06-02 16:32:49.453876');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `django_session`
+--
+
+DROP TABLE IF EXISTS `django_session`;
+CREATE TABLE IF NOT EXISTS `django_session` (
+  `session_key` varchar(40) COLLATE utf8mb4_general_ci NOT NULL,
+  `session_data` longtext COLLATE utf8mb4_general_ci NOT NULL,
+  `expire_date` datetime(6) NOT NULL,
+  PRIMARY KEY (`session_key`),
+  KEY `django_session_expire_date_a5c62663` (`expire_date`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `django_session`
+--
+
+INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALUES
+('3aumtcrjmijdilubky0le0xltsqoncfm', 'e30:1sDpzR:UVFwWeRe672-LflZIntKbZjYbAk6_uCu4bSizfws754', '2024-06-16 18:31:33.128061'),
+('4qkgw6hb6qh48xpz9yffr1uylxkv8jv5', '.eJxVjDsOwjAQBe_iGlmRsxvblPScwdqPwQHkSHFSRdwdIqWA9s3M20yidSlpbXlOo5qzQXP63ZjkmesO9EH1PlmZ6jKPbHfFHrTZ66T5dTncv4NCrXxrcSELMGBkJ7c4sFKMXj0pBiAHnZB30gdBAddhnynIAIwegzhWNO8P-7k4PA:1sE6en:pcx5AlE1WA4zYP8bfbVky_apLVhQkKyu0Gie4lGNCE0', '2024-06-17 12:19:21.507060'),
+('0k8rvrifnlmxkdeoi2eb9ds2or7bb7mm', '.eJxVjMsOwiAQRf-FtSEwDI9x6d5vIFBAqgaS0q6M_65NutDtPefcF_NhW6vfRl78nNiZETv9bjFMj9x2kO6h3TqfeluXOfJd4Qcd_NpTfl4O9--ghlG_tQyUSRpQOoqSpHPRkUMtVMkGBIhIGBBNcREIs1EW0GpCAcahtQbY-wO1wTXj:1sFXBM:T3oG2Sj1o3h5O54FKI8PBDTa-Qmp5Tq1bG1ttWtCZhg', '2024-06-21 10:50:52.151685');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `membre_emprunteur`
+--
+
+DROP TABLE IF EXISTS `membre_emprunteur`;
+CREATE TABLE IF NOT EXISTS `membre_emprunteur` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `blocked` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `membre_emprunteur`
+--
+
+INSERT INTO `membre_emprunteur` (`id`, `name`, `blocked`) VALUES
+(23, 'flo', 1),
+(22, 'simone', 0),
+(21, 'isa', 0);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
 Connexion à la base de données :
  'ENGINE': 'django.db.backends.mysql',
         'NAME': 'mediatheque',
@@ -103,16 +607,19 @@ Connexion à la base de données :
         'HOST': '127.0.0.1',
         'PORT': '3306',
 
+
 Connexion à http://127.0.0.1:8000/admin/ avec superuser :
     Nom d’utilisateur : amely
     Mot de passe : aamm
 
+
 Connexion bibliothécaire :
-    Nom d’utilisateur : : mmejane
+    Nom d’utilisateur : mmejane
     Mot de passe : jane
 
+
 Connexion membres :
-    Nom d’utilisateur : : prenom_user
+    Nom d’utilisateur : prenom_user
     Mot de passe : prenom_user
     Exemple pour isa = isa et isa
 
@@ -122,6 +629,7 @@ Connexion membres :
 Installer Python sur la machine : https://www.python.org/downloads/
 Installer pip si ce n'est pas déjà le cas :python -m ensurepip --upgrade
 Installer Django : pip install django
+Istaller les tables principales de Django : python manage.py migrate
 Exécuter le serveur de développement Django en utilisant la commande : python manage.py runserver
 
 
